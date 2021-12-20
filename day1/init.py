@@ -35,7 +35,7 @@ def part_two(depths, window_size):
 
 
 def readFile():
-    f = open("input.txt", "r")
+    f = open("test.txt", "r")
     data = f.read().splitlines()
     data = [ int(x) for x in data ]
     return data 
