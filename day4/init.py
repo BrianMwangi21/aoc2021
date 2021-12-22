@@ -2,10 +2,10 @@ def run_my_boy():
     bingo_marked, bingo_boards = readFile()
     
     print(f"Part One : Score is {part_one(bingo_marked, bingo_boards)}")
+    print(f"Part Two : Score is {part_two(bingo_marked, bingo_boards)}")
 
 
 def part_one(marked, boards):
-    # Loop through the marked numbers and mark positions on board
     for mark in marked:
         for board in boards:
             for i in range(5):
@@ -23,8 +23,31 @@ def part_one(marked, boards):
     return 0
 
 
+def part_two(marked, boards):
+    drawn_boards_count = [0] * len(boards)
+
+    for mark in marked:
+        for pos, board in enumerate(boards):
+            for i in range(5):
+                for j in range(5):
+                    if board[i][j] == mark:
+                        board[i][j] = "M"
+
+            # Check if board is drawn
+            drawn = check_draw( board )
+
+            if drawn:
+                drawn_boards_count[pos] = 1
+
+            # Then check if 1 count is one
+            if drawn_boards_count.count(0) < 1:
+                score = calculate_score(mark, board)
+                return score
+            
+    return 0
+
+
 def check_draw(board):
-    # First check the rows
     m_count_row = [0] * 5
     for row in range(5):
        for col in range(5):
@@ -34,7 +57,6 @@ def check_draw(board):
     if 5 in m_count_row:
         return True
 
-    # Then check the cols
     m_count_col = [0] * 5
     for col in range(5):
         for row in range(5):
@@ -63,10 +85,8 @@ def generate_boards(boards_raw):
     num_of_boards = int(len(boards_raw) / 25)
     counter = 0
 
-    # Create boards
     boards = [[[0] * grid_size for _ in range( grid_size ) ] for _ in range ( num_of_boards )]
 
-    # Input the raw data
     for board in boards:
         for i in range( grid_size ):
             for j in range( grid_size ):
@@ -83,11 +103,9 @@ def get_file():
 
 def readFile():
     f = get_file()
-    # First get the marked numbers
     marked_numbers = f.readline().strip().split(",")
     f.close()
 
-    # Then get the boards
     f = get_file()
     boards = []
 
