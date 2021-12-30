@@ -3,7 +3,7 @@ import itertools
 def run_my_boy():
     signals = readFile()
 
-    # print(f"Part One : {part_one(signals)}")
+    print(f"Part One : {part_one(signals)}")
     print(f"Part Two : {part_two()}")
 
 def part_one(signals):
